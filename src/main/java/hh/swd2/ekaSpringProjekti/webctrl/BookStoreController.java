@@ -16,6 +16,8 @@ public class BookStoreController {
 	@Autowired
 	private BookRepository bookRepository;
 	
+	 @Autowired
+	    private CategoryRepository categoryRepository;
 	@RequestMapping(value="/booklist", method=RequestMethod.GET)
 	public String getBooks(Model model) {
 			//haetaan iedot tietokannasta
@@ -33,6 +35,7 @@ public class BookStoreController {
 	 @RequestMapping(value = "/add")
 	    public String addStudent(Model model){
 	    	model.addAttribute("book", new Book());
+	    	model.addAttribute("categories", categoryRepository.findAll());
 	        return "addbook";
 	    }   
 		
@@ -46,6 +49,7 @@ public class BookStoreController {
 	    public String editBook(@PathVariable("isbn") Long bookIsbn, Model model){
 	       Book book = findBook(bookIsbn);
 	       model.addAttribute("book", book);
+	       model.addAttribute("categories", categoryRepository.findAll());
 
 	       return "editbook";
 	    }
